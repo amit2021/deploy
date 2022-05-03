@@ -10,7 +10,7 @@ jobs:
           name: Install Python deps in a venv
           command: |
             echo 'export TAG=0.1.${CIRCLE_BUILD_NUM}' >> $BASH_ENV
-            sudo apt install python3-venv
+            sudo apt install python2.6-venv
             . venv/bin/activate
             pip install --upgrade pip  
       - store_artifacts:
