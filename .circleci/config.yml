@@ -13,17 +13,12 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install --upgrade pip
-  
-      - run:
-          command: |
-            . venv/bin/activate
       - store_artifacts:
           path: test-reports/
           destination: tr1
       - store_test_results:
           path: test-reports/
       
-     
   deploy:
     executor: heroku/default
     steps:
