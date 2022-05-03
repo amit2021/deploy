@@ -1,19 +1,6 @@
 version: 2.1
 orbs:
   heroku: circleci/heroku@1.0.1
-jobs:
-  build-and-test:
-    executor: heroku/default
-    steps:
-      - checkout
-      - run:
-          name: Install Python deps in a venv
-      
-      - store_artifacts:
-          path: test-reports/
-          destination: tr1
-      - store_test_results:
-          path: test-reports/
       
   deploy:
     executor: heroku/default
@@ -24,18 +11,9 @@ jobs:
           command: |
             git rev-parse HEAD > ./commit.txt
       - heroku/install
-      - run:
-          name: Pushing to heroku registry
-          command: |
-            heroku container:login
-            #heroku ps:scale web=1 -a $HEROKU_APP_NAME
-            heroku container:push web -a $HEROKU_APP_NAME
-            heroku container:release web -a $HEROKU_APP_NAME
-
+      
 workflows:
   build-test-deploy:
-    jobs:
-      - build-and-test
       - deploy:
           requires:
             - build-and-test
